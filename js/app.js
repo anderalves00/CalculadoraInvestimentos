@@ -3,13 +3,15 @@ import { simular } from './calculo/simulacao.js';
 import { EDUCATIVO } from './conteudo.js';
 import { parseNumeroBR } from './ui/formato.js';
 import { renderIndicadores } from './ui/indicadores.js';
-import { criarColuna, mostrarErros } from './ui/colunas.js';
+import { criarColuna, mostrarErros, travarCampo } from './ui/colunas.js';
+import { aplicarUnico } from './estado.js';
+import { renderSimulacao } from './ui/simulacao.js';
 import { renderCard, renderRecomendacao } from './ui/resultados.js';
 import { renderGraficos, corSerie } from './ui/graficos.js';
 import { vencedor, evolucaoMensal } from './calculo/comparacao.js';
 import { recomendar } from './recomendacao.js';
 import { TIPOS } from './conteudo.js';
-import { esc } from './ui/formato.js';
+import { esc, brl, taxaTexto } from './ui/formato.js';
 
 const MIN_COLUNAS = 1;
 const MAX_COLUNAS = 6;
@@ -23,6 +25,8 @@ const estado = {
     { tipo: 'LCI', indexador: 'pctCDI', taxa: '95', meses: '12', valor: '10.000' },
     { tipo: 'Tesouro Selic', indexador: 'selicMais', taxa: '0,05', meses: '12', valor: '10.000' },
   ],
+  unico: { meses: { ativo: false, texto: '12' }, valor: { ativo: false, texto: 'R$ 10.000,00' } },
+  simulacao: false,
 };
 
 const elColunas = document.getElementById('colunas');
@@ -61,7 +65,8 @@ export function recalcular() {
   const hoje = new Date();
   hoje.setHours(0, 0, 0, 0);
   const m = mercado();
-  const validacoes = estado.colunas.map(validar);
+  if (estado.simulacao) { recalcularSimulacao(m, hoje); return; }
+  const validacoes = aplicarUnico(estado.colunas, estado.unico).map(validar);
   validacoes.forEach((v, i) => mostrarErros(elementos[i], v.erros));
   const ofertas = validacoes.map(v => v.oferta);
   const resultados = ofertas.map(o => (o ? simular(o, m, hoje) : null));
@@ -94,8 +99,72 @@ function renderColunas() {
     return el;
   });
   btnAdicionar.disabled = estado.colunas.length >= MAX_COLUNAS;
+  aplicarTravas();
   recalcular();
 }
+
+function aplicarTravas() {
+  for (const campo of ['meses', 'valor']) {
+    const u = estado.unico[campo];
+    elementos.forEach(el => travarCampo(el, campo, u.ativo ? u.texto : null));
+    if (!u.ativo) elementos.forEach((el, i) => { el.querySelector(`[data-campo="${campo}"]`).value = estado.colunas[i][campo]; });
+  }
+}
+
+const FORMATO_UNICO = { valor: brl, meses: n => String(n) };
+
+document.querySelectorAll('[data-unico]').forEach(chk => {
+  const campo = chk.dataset.unico;
+  const input = document.querySelector(`[data-unico-texto="${campo}"]`);
+  chk.addEventListener('change', () => {
+    estado.unico[campo].ativo = chk.checked;
+    input.disabled = !chk.checked;
+    aplicarTravas();
+    recalcular();
+  });
+  input.addEventListener('input', () => {
+    estado.unico[campo].texto = input.value;
+    aplicarTravas();
+    recalcular();
+  });
+  input.addEventListener('focusout', () => {
+    const n = parseNumeroBR(input.value);
+    if (n == null) return;
+    input.value = estado.unico[campo].texto = FORMATO_UNICO[campo](n);
+    aplicarTravas();
+  });
+});
+
+const sim = {
+  meta: document.getElementById('sim-meta'),
+  meses: document.getElementById('sim-meses'),
+  valor: document.getElementById('sim-valor'),
+  erro: document.getElementById('sim-erro'),
+  saida: document.getElementById('sim-resultado'),
+};
+
+function recalcularSimulacao(m, hoje) {
+  const meta = parseNumeroBR(sim.meta.value);
+  const meses = parseNumeroBR(sim.meses.value);
+  const valor = parseNumeroBR(sim.valor.value);
+  let erro = '';
+  if (meta == null || meta <= 0 || meta > 20) erro = 'Informe uma meta mensal entre 0 e 20%.';
+  else if (meses == null || !Number.isInteger(meses) || meses < 1 || meses > 600) erro = 'Informe um prazo inteiro entre 1 e 600 meses.';
+  else if (valor == null || valor <= 0) erro = 'Informe um valor maior que zero.';
+  sim.erro.textContent = erro;
+  if (erro) { sim.saida.innerHTML = ''; return; }
+  renderSimulacao(sim.saida, { alvoMensal: meta / 100, meses, valor }, m, hoje);
+}
+
+[sim.meta, sim.meses, sim.valor].forEach(i => i.addEventListener('input', recalcular));
+sim.meta.addEventListener('focusout', () => { const n = parseNumeroBR(sim.meta.value); if (n != null) sim.meta.value = taxaTexto(n); });
+sim.valor.addEventListener('focusout', () => { const n = parseNumeroBR(sim.valor.value); if (n != null) sim.valor.value = brl(n); });
+
+document.getElementById('modo-simulacao').addEventListener('change', e => {
+  estado.simulacao = e.target.checked;
+  document.body.classList.toggle('modo-simulacao', estado.simulacao);
+  recalcular();
+});
 
 function renderPainel() {
   renderIndicadores(elIndicadores, {

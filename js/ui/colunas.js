@@ -109,3 +109,10 @@ export function mostrarErros(el, erros) {
     el.querySelector(`[data-erro="${campo}"]`).textContent = erros[campo] ?? '';
   }
 }
+
+// Prazo/valor únicos: o campo do card fica travado mostrando o valor comum.
+export function travarCampo(el, campo, texto) {
+  const input = el.querySelector(`[data-campo="${campo}"]`);
+  input.disabled = texto != null;
+  if (texto != null) input.value = texto;
+}
