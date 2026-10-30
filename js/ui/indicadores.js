@@ -19,8 +19,8 @@ function referencia(nome, ind) {
 
 function blocoFixo(nome, ind, formatado) {
   return `<div class="indicador">
-    <div class="rotulo">${NOMES[nome]}</div>
-    <div class="valor">${formatado}</div>
+    <label class="rotulo" for="ind-${nome}">${NOMES[nome]} (R$)</label>
+    <input id="ind-${nome}" readonly value="${formatado}" title="Só informativo: não entra no cálculo">
     <div class="data">${referencia(nome, ind)}</div>
   </div>`;
 }
@@ -43,7 +43,7 @@ export function renderIndicadores(el, { indicadores, sobrescritos, valores, padr
     ${blocoEditavel('selic', indicadores.selic, valores.selic, sobrescritos.selic != null)}
     ${blocoEditavel('cdi', indicadores.cdi, valores.cdi, sobrescritos.cdi != null)}
     ${blocoEditavel('ipca12m', indicadores.ipca12m, valores.ipca12m, sobrescritos.ipca12m != null)}
-    ${blocoFixo('dolar', indicadores.dolar, 'R$ ' + numero(valores.dolar, 4))}
+    ${blocoFixo('dolar', indicadores.dolar, numero(valores.dolar, 4))}
   </div>${aviso}`;
 
   el.querySelectorAll('[data-indicador]').forEach(inp =>
