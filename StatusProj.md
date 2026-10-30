@@ -6,7 +6,7 @@
 > Configuração de máquina e comando de sincronização não são estado do projeto: não entram aqui.
 
 ## Onde paramos
-Design da Fase 1 aprovado em 2026-10-29: `docs/superpowers/specs/2026-10-29-calculadora-investimentos-design.md`. Próximo passo: plano de implementação. Sem código ainda.
+Design da Fase 1 aprovado em 2026-10-29: `docs/superpowers/specs/2026-10-29-calculadora-investimentos-design.md`. Plano da Fase 1 escrito: `docs/superpowers/plans/2026-10-29-fase1-calculadora.md` (7 tarefas). Aguardando revisão do usuário e escolha do modo de execução. Sem código ainda. Regras fiscais conferidas em 2026-10-29: LCI/LCA isentas (MP 1.303/2025 caducou); custódia Tesouro 0,20% a.a., Selic isento até R$ 10 mil.
 
 ## Bloqueios
 - Nenhum.

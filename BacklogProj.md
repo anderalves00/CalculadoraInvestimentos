@@ -9,7 +9,7 @@
 > `DecisoesProj.md`, detalhe técnico vira doc em `.claude/docs/`. Aqui fica o ponteiro.
 
 ## Agora
-- [ ] [2026-10-29, alta] Plano de implementação da Fase 1 — design em `docs/superpowers/specs/2026-10-29-calculadora-investimentos-design.md`
+- [ ] [2026-10-29, alta] Executar plano da Fase 1 — `docs/superpowers/plans/2026-10-29-fase1-calculadora.md`
 
 ## Depois
 - [ ] [2026-10-29, média] Fase 2: servidor com senha, Tesouro, recomendação por IA — ver design
