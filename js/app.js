@@ -46,7 +46,8 @@ function validar(c) {
   const taxa = parseNumeroBR(c.taxa);
   const meses = parseNumeroBR(c.meses);
   const valor = parseNumeroBR(c.valor);
-  if (taxa == null || taxa < 0) erros.taxa = 'Informe uma taxa válida (ex.: 10,5).';
+  if (String(c.taxa).trim() === '') erros.taxa = 'Informe a taxa.';
+  else if (taxa == null || taxa < 0) erros.taxa = 'Informe uma taxa válida (ex.: 10,5).';
   if (meses == null || !Number.isInteger(meses) || meses < 1 || meses > 600) erros.meses = 'Informe um prazo inteiro entre 1 e 600 meses.';
   if (valor == null || valor <= 0) erros.valor = 'Informe um valor maior que zero.';
   if (Object.keys(erros).length) return { oferta: null, erros };

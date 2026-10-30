@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { brl, pct, parseNumeroBR } from '../js/ui/formato.js';
+import { brl, pct, parseNumeroBR, taxaTexto } from '../js/ui/formato.js';
 
 test('parseNumeroBR', () => {
   assert.equal(parseNumeroBR('10,5'), 10.5);
@@ -19,4 +19,12 @@ test('ponto único é decimal; ponto só é milhar em grupos de 3', () => {
   assert.equal(parseNumeroBR('1.234.567,8'), 1234567.8);
   assert.equal(parseNumeroBR('10000.50'), 10000.5);
   assert.equal(parseNumeroBR('1.23.4'), null);
+});
+test('lê valores já formatados com símbolos', () => {
+  assert.equal(parseNumeroBR('R$ 10.000,00'), 10000);
+  assert.equal(parseNumeroBR('10,50%'), 10.5);
+  assert.equal(parseNumeroBR('R$ 1.234,5'), 1234.5);
+});
+test('formata taxa para exibição', () => {
+  assert.equal(taxaTexto(10.5), '10,50%');
 });

@@ -23,6 +23,8 @@
 
 **Implementação:** Fase 1 feita no mesmo dia. Regras conferidas por busca: LCI/LCA isentas em 2026 (MP 1.303/2025 caducou 08/10/2025); custódia 0,20% a.a., Tesouro Selic isento até R$ 10 mil. Gráfico de barras mostra só o rendimento (com valor total a diferença sumia). Cores dos gráficos: paleta de referência da skill dataviz (validador não rodou por bloqueio de permissão na pasta temporária).
 
+**Ajustes pedidos pelo usuário após o primeiro uso:** taxa e prazo na mesma linha; rentabilidade em botões; taxa e valor reformatados com % e R$ ao sair do campo; datas dos indicadores explicadas (Selic = meta vigente, CDI = taxa do dia, IPCA = acumulado até o mês, dólar = PTAX); "Conheça os investimentos" em coluna única.
+
 **Ficou aberto:** hospedagem para acessar de outros dispositivos.
 
 ## AAAA-MM-DD

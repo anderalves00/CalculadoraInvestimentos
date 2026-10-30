@@ -84,6 +84,18 @@ input, select {
   min-height: 44px;
 }
 input.invalido { border-color: var(--erro); background: var(--erro-fundo); }
+.campo { display: flex; flex-direction: column; gap: 4px; }
+.rotulo-campo { font-size: .85rem; color: var(--texto-suave); }
+.dupla { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.dupla input { width: 100%; }
+.segmentos { display: flex; flex-wrap: wrap; gap: 6px; }
+.segmento {
+  font: inherit; font-size: .85rem; min-height: 40px; padding: 6px 12px; cursor: pointer;
+  border: 1px solid var(--borda); border-radius: 999px; background: var(--superficie); color: var(--texto);
+}
+.segmento.ativo { background: var(--destaque); border-color: var(--destaque); color: #fff; font-weight: 600; }
+.segmento:disabled { cursor: default; }
+.segmento:disabled:not(.ativo) { opacity: .5; }
 .msg-erro { color: var(--erro); font-size: .8rem; min-height: 0; }
 .msg-erro:empty { display: none; }
 
@@ -131,5 +143,4 @@ dialog dd { margin: 0; }
   .indicadores { grid-template-columns: repeat(4, 1fr); }
   .colunas { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
   .graficos { grid-template-columns: 1fr 1fr; }
-  .educativo { grid-template-columns: 1fr 1fr; }
 }

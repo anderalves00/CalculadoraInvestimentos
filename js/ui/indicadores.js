@@ -2,11 +2,26 @@ import { numero, esc } from './formato.js';
 
 const NOMES = { selic: 'Selic', cdi: 'CDI', ipca12m: 'IPCA (12 meses)', dolar: 'Dólar' };
 
+const MESES = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+
+// Cada série tem uma referência diferente; a etiqueta diz qual é.
+function referencia(nome, ind) {
+  if (!ind) return 'sem atualização';
+  const [, mes, ano] = String(ind.data).split('/');
+  switch (nome) {
+    case 'selic': return 'meta vigente do Copom';
+    case 'cdi': return `taxa de ${esc(ind.data)}`;
+    case 'ipca12m': return `acumulado até ${MESES[Number(mes) - 1] ?? '?'}/${esc(ano)}`;
+    case 'dolar': return `PTAX de ${esc(ind.data)}`;
+    default: return esc(ind.data);
+  }
+}
+
 function blocoFixo(nome, ind, formatado) {
   return `<div class="indicador">
     <div class="rotulo">${NOMES[nome]}</div>
     <div class="valor">${formatado}</div>
-    <div class="data">${ind ? `ref. ${esc(ind.data)}` : 'sem atualização'}</div>
+    <div class="data">${referencia(nome, ind)}</div>
   </div>`;
 }
 
@@ -14,7 +29,7 @@ function blocoEditavel(nome, ind, valorAtual, sobrescrito) {
   return `<div class="indicador">
     <label class="rotulo" for="ind-${nome}">${NOMES[nome]} (% a.a.)</label>
     <input id="ind-${nome}" data-indicador="${nome}" inputmode="decimal" value="${numero(valorAtual * 100)}">
-    <div class="data">${sobrescrito ? '<button class="restaurar" data-restaurar="' + nome + '">valor seu · restaurar</button>' : ind ? `ref. ${esc(ind.data)}` : 'sem atualização'}</div>
+    <div class="data">${sobrescrito ? '<button class="restaurar" data-restaurar="' + nome + '">valor seu · restaurar</button>' : referencia(nome, ind)}</div>
   </div>`;
 }
 
