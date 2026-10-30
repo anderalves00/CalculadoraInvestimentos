@@ -1,0 +1,14 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { brl, pct, parseNumeroBR } from '../js/ui/formato.js';
+
+test('parseNumeroBR', () => {
+  assert.equal(parseNumeroBR('10,5'), 10.5);
+  assert.equal(parseNumeroBR('1.000,00'), 1000);
+  assert.equal(parseNumeroBR(''), null);
+  assert.equal(parseNumeroBR('abc'), null);
+});
+test('formatos', () => {
+  assert.equal(pct(.1512), '15,12%');
+  assert.match(brl(1234.56), /1\.234,56/);
+});

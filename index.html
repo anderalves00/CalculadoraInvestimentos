@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Comparador de Renda Fixa</title>
+  <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+  <header class="topo">
+    <h1>Comparador de Renda Fixa</h1>
+    <p class="sub">Compare ofertas disponíveis hoje e veja quanto cada uma entrega no seu bolso.</p>
+  </header>
+
+  <main>
+    <section id="indicadores" class="painel" aria-label="Indicadores de mercado"></section>
+
+    <section aria-label="Ofertas">
+      <div class="barra">
+        <h2>Ofertas</h2>
+        <button id="adicionar" class="botao">+ Adicionar oferta</button>
+      </div>
+      <div id="colunas" class="colunas"></div>
+      <p class="premissa">Projeção com as taxas atuais mantidas constantes até o vencimento.</p>
+    </section>
+  </main>
+
+  <dialog id="ajuda">
+    <form method="dialog">
+      <h3 id="ajuda-titulo"></h3>
+      <div id="ajuda-corpo"></div>
+      <button class="botao">Fechar</button>
+    </form>
+  </dialog>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
