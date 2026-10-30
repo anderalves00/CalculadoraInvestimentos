@@ -6,7 +6,7 @@
 > Configuração de máquina e comando de sincronização não são estado do projeto: não entram aqui.
 
 ## Onde paramos
-Design da Fase 1 aprovado em 2026-10-29: `docs/superpowers/specs/2026-10-29-calculadora-investimentos-design.md`. Plano da Fase 1 escrito: `docs/superpowers/plans/2026-10-29-fase1-calculadora.md` (7 tarefas). Aguardando revisão do usuário e escolha do modo de execução. Sem código ainda. Regras fiscais conferidas em 2026-10-29: LCI/LCA isentas (MP 1.303/2025 caducou); custódia Tesouro 0,20% a.a., Selic isento até R$ 10 mil.
+Fase 1 implementada (2026-10-29): plano `docs/superpowers/plans/2026-10-29-fase1-calculadora.md`, 7/7 tarefas. Página estática (`index.html` + `js/`), 24 testes (`npm test`). Verificada no navegador em 1280×900 e 390×844 com o exemplo da referência (CDB pré 10% × LCI 105% CDI, CDI 14,4%): CDB com IR 17,5%, LCI vencedora. Rodar local: `python -m http.server 8000` (módulos ES não abrem via file://). Ainda não publicada em hospedagem.
 
 ## Bloqueios
 - Nenhum.

@@ -21,7 +21,9 @@
 
 **Estudos:** referência Sardinha lida via playwright-cli (WebFetch bloqueado no domínio): erra faixa de IR e desconta IR da taxa anual — `.claude/docs/referencia-comparador-sardinha.md`. Teste em 2026-10-29 no navegador: API SGS do Banco Central responde 200 direto da página (Selic, CDI, IPCA, dólar, Focus); Tesouro Direto bloqueia (Failed to fetch) → Fase 2.
 
-**Ficou aberto:** conferir na implementação regras de IR vigentes em 2026 (LCI/LCA) e custódia B3.
+**Implementação:** Fase 1 feita no mesmo dia. Regras conferidas por busca: LCI/LCA isentas em 2026 (MP 1.303/2025 caducou 08/10/2025); custódia 0,20% a.a., Tesouro Selic isento até R$ 10 mil. Gráfico de barras mostra só o rendimento (com valor total a diferença sumia). Cores dos gráficos: paleta de referência da skill dataviz (validador não rodou por bloqueio de permissão na pasta temporária).
+
+**Ficou aberto:** hospedagem para acessar de outros dispositivos.
 
 ## AAAA-MM-DD
 

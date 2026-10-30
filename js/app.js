@@ -4,6 +4,12 @@ import { EDUCATIVO } from './conteudo.js';
 import { parseNumeroBR } from './ui/formato.js';
 import { renderIndicadores } from './ui/indicadores.js';
 import { criarColuna, mostrarErros } from './ui/colunas.js';
+import { renderCard, renderRecomendacao } from './ui/resultados.js';
+import { renderGraficos, corSerie } from './ui/graficos.js';
+import { vencedor, evolucaoMensal } from './calculo/comparacao.js';
+import { recomendar } from './recomendacao.js';
+import { TIPOS } from './conteudo.js';
+import { esc } from './ui/formato.js';
 
 const MIN_COLUNAS = 1;
 const MAX_COLUNAS = 6;
@@ -122,6 +128,31 @@ btnAdicionar.addEventListener('click', () => {
   estado.colunas.push({ tipo: 'CDB', indexador: 'pctCDI', taxa: '100', meses: primeira.meses, valor: primeira.valor });
   renderColunas();
 });
+
+aoRecalcular(({ ofertas, resultados, mercado: m, ipca12m, hoje, elementos: els }) => {
+  const iv = vencedor(resultados);
+  resultados.forEach((r, i) => renderCard(els[i], r, { venceu: i === iv, cor: corSerie(i) }));
+  renderRecomendacao(document.getElementById('recomendacao'), recomendar(ofertas, resultados, m, ipca12m));
+
+  const series = ofertas
+    .map((o, i) => o && { nome: `${i + 1}. ${o.tipo}`, cor: corSerie(i), r: resultados[i], evolucao: evolucaoMensal(o, m, hoje) })
+    .filter(Boolean);
+  if (window.Chart) {
+    renderGraficos({
+      series,
+      canvasLinhas: document.getElementById('grafico-linhas'),
+      canvasBarras: document.getElementById('grafico-barras'),
+    });
+  }
+});
+
+document.getElementById('educativo').innerHTML = TIPOS.map(t => {
+  const e = EDUCATIVO[t];
+  return `<details><summary>${esc(t)}</summary>
+    <p>${e.oQueE}</p><p><strong>Garantia:</strong> ${e.garantia}</p>
+    <p><strong>Liquidez:</strong> ${e.liquidez}</p><p><strong>Tributação:</strong> ${e.tributacao}</p>
+    <p><strong>Para quem:</strong> ${e.indicadoPara}</p></details>`;
+}).join('');
 
 renderPainel();
 renderColunas();

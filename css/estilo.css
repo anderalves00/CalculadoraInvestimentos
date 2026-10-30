@@ -101,6 +101,28 @@ input.invalido { border-color: var(--erro); background: var(--erro-fundo); }
 .botao-leve { background: none; color: var(--texto-suave); border: 1px solid var(--borda); border-radius: 8px; min-height: 36px; padding: 4px 10px; cursor: pointer; font: inherit; font-size: .85rem; }
 .icone-ajuda { min-width: 44px; min-height: 44px; border-radius: 8px; border: 1px solid var(--borda); background: none; color: var(--texto); cursor: pointer; font-weight: 700; }
 
+.resultado { border-top: 1px solid var(--borda); padding-top: 12px; display: flex; flex-direction: column; gap: 6px; }
+.selo { align-self: flex-start; background: var(--destaque); color: #fff; font-weight: 700; font-size: .8rem; padding: 4px 10px; border-radius: 999px; }
+.res-liquido { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.res-liquido span { color: var(--texto-suave); font-size: .85rem; }
+.res-liquido strong { font-size: 1.5rem; font-variant-numeric: tabular-nums; }
+.marca-serie { width: 10px; height: 10px; border-radius: 50%; background: var(--cor-serie); align-self: center; }
+.res-taxa { font-size: .9rem; }
+.res-taxa strong { color: var(--destaque); font-size: 1.05rem; }
+.res-linha { display: flex; justify-content: space-between; gap: 8px; font-size: .85rem; color: var(--texto-suave); font-variant-numeric: tabular-nums; }
+.res-linha span:last-child { color: var(--texto); }
+
+#recomendacao, .graficos, .bloco { margin-top: 24px; }
+#recomendacao:empty { display: none; }
+.graficos { display: grid; gap: 16px; }
+.graficos .bloco { margin-top: 0; min-width: 0; }
+.legenda-grafico { color: var(--texto-suave); font-size: .85rem; margin: 4px 0 8px; }
+.area-grafico { position: relative; height: 280px; }
+.educativo { display: grid; gap: 12px; }
+.educativo details { border: 1px solid var(--borda); border-radius: 8px; padding: 8px 12px; }
+.educativo summary { cursor: pointer; font-weight: 600; min-height: 32px; }
+main { padding-bottom: 48px; }
+
 dialog { max-width: 520px; border: 1px solid var(--borda); border-radius: var(--raio); background: var(--superficie); color: var(--texto); }
 dialog dt { font-weight: 600; margin-top: 8px; }
 dialog dd { margin: 0; }
@@ -108,4 +130,6 @@ dialog dd { margin: 0; }
 @media (min-width: 768px) {
   .indicadores { grid-template-columns: repeat(4, 1fr); }
   .colunas { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+  .graficos { grid-template-columns: 1fr 1fr; }
+  .educativo { grid-template-columns: 1fr 1fr; }
 }

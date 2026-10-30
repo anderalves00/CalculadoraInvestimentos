@@ -9,7 +9,8 @@
 > `DecisoesProj.md`, detalhe técnico vira doc em `.claude/docs/`. Aqui fica o ponteiro.
 
 ## Agora
-- [ ] [2026-10-29, alta] Executar plano da Fase 1 — `docs/superpowers/plans/2026-10-29-fase1-calculadora.md`
+- [ ] [2026-10-29, alta] Publicar a Fase 1 numa hospedagem estática que aceite repositório privado (verificar limites antes)
+- [ ] [2026-10-29, alta] Usar a Fase 1 e coletar ajustes do usuário
 
 ## Depois
 - [ ] [2026-10-29, média] Fase 2: servidor com senha, Tesouro, recomendação por IA — ver design

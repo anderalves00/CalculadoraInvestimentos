@@ -23,6 +23,26 @@
       <div id="colunas" class="colunas"></div>
       <p class="premissa">Projeção com as taxas atuais mantidas constantes até o vencimento.</p>
     </section>
+
+    <section id="recomendacao" class="bloco" aria-live="polite"></section>
+
+    <section class="graficos">
+      <div class="bloco">
+        <h2>Quanto você teria se resgatasse em cada mês</h2>
+        <p class="legenda-grafico">Valor líquido (após IR, IOF e custódia) mês a mês.</p>
+        <div class="area-grafico"><canvas id="grafico-linhas" aria-label="Evolução do valor líquido por oferta" role="img"></canvas></div>
+      </div>
+      <div class="bloco">
+        <h2>Para onde vai o rendimento</h2>
+        <p class="legenda-grafico">Rendimento de cada oferta: cor cheia = ganho que fica com você; tons mais claros = IR, IOF e custódia.</p>
+        <div class="area-grafico"><canvas id="grafico-barras" aria-label="Composição do resultado por oferta" role="img"></canvas></div>
+      </div>
+    </section>
+
+    <section class="bloco">
+      <h2>Conheça os investimentos</h2>
+      <div id="educativo" class="educativo"></div>
+    </section>
   </main>
 
   <dialog id="ajuda">
@@ -33,6 +53,7 @@
     </form>
   </dialog>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" integrity="sha384-bs/nf9FbdNouRbMiFcrcZfLXYPKiPaGVGplVbv7dLGECccEXDW+S3zjqSKR5ZEaD" crossorigin="anonymous"></script>
   <script type="module" src="js/app.js"></script>
 </body>
 </html>
