@@ -6,7 +6,7 @@
 > Configuração de máquina e comando de sincronização não são estado do projeto: não entram aqui.
 
 ## Onde paramos
-Fase 1 implementada (2026-10-29): plano `docs/superpowers/plans/2026-10-29-fase1-calculadora.md`, 7/7 tarefas. Página estática (`index.html` + `js/`), 38 testes (`npm test`), revisão final feita e corrigida. Verificada no navegador em 1280×900 e 390×844 com o exemplo da referência (CDB pré 10% × LCI 105% CDI, CDI 14,4%): CDB com IR 17,5%, LCI vencedora. Rodar local: `python servir.py` → http://localhost:8000 (sem cache; módulos ES não abrem via file://). Ainda não publicada em hospedagem.
+Fase 1 implementada (2026-10-29): plano `docs/superpowers/plans/2026-10-29-fase1-calculadora.md`, 7/7 tarefas. Página estática (`index.html` + `js/`), 38 testes (`npm test`), revisão final feita e corrigida. Verificada no navegador em 1280×900 e 390×844 com o exemplo da referência (CDB pré 10% × LCI 105% CDI, CDI 14,4%): CDB com IR 17,5%, LCI vencedora. Rodar local: `python servir.py` → http://localhost:8000 (sem cache; módulos ES não abrem via file://). Publicada em 2026-10-29: https://anderalves00.github.io/CalculadoraInvestimentos/ (GitHub Pages da main; repositório tornado público porque o plano gratuito não permite Pages em repo privado — autorizado pelo usuário). Todo push na main atualiza o site.
 
 ## Bloqueios
 - Nenhum.

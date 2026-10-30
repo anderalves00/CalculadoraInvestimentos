@@ -27,7 +27,9 @@
 
 **Modo simulação (pedido do usuário):** interruptor no topo troca a página para roxo e esconde a comparação; usuário informa meta mensal **líquida** (confirmado), prazo e valor, e a tabela mostra a taxa mínima por tipo × indexador (busca binária sobre a simulação). Aviso de meta alta acima de 130% do CDI — limite escolhido por mim, ajustável. Prazo e valor únicos: duas caixas independentes (escolha minha) que travam os campos dos cards.
 
-**Ficou aberto:** hospedagem para acessar de outros dispositivos.
+**Publicação:** GitHub Pages exige plano pago para repo privado (API respondeu 422). Usuário escolheu repo público em vez de Cloudflare com senha (Fase 2); a página não guarda dados pessoais.
+
+**Ficou aberto:** nada da Fase 1.
 
 ## AAAA-MM-DD
 

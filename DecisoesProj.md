@@ -22,4 +22,5 @@
 
 - **[2026-10-29]** Uso pessoal; acesso de qualquer dispositivo (servidor com senha na Fase 2) — porquê no `DiarioProj.md`
 - **[2026-10-29]** Ordem de fases 1→4 conforme o design — porquê no `DiarioProj.md`
+- **[2026-10-29]** Publicar no GitHub Pages com repositório público (sem senha; e-mail dos commits fica visível) — porquê no `DiarioProj.md`
 - **[2026-10-29]** Vencedor por rentabilidade líquida ao ano, sem reinvestimento — porquê no `DiarioProj.md`
