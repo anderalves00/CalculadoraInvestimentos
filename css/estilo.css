@@ -74,7 +74,7 @@ h2 { margin: 0; font-size: 1.2rem; }
 .colunas { display: grid; grid-template-columns: 1fr; gap: 16px; }
 
 .coluna { display: flex; flex-direction: column; gap: 10px; }
-.coluna.vencedora { border: 2px solid var(--destaque); box-shadow: 0 0 0 4px var(--destaque-fundo); }
+.coluna.vencedora { border: 2px solid var(--destaque); background: var(--destaque-fundo); }
 .cabeca { display: flex; justify-content: space-between; align-items: center; }
 .cabeca strong { font-size: .9rem; color: var(--texto-suave); }
 
