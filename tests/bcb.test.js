@@ -25,3 +25,8 @@ test('resposta não ok conta como falha', async () => {
   assert.equal(r.selic, null);
   assert.deepEqual(r.erros, ['selic']);
 });
+test('busca travada vira erro depois do limite de tempo', async () => {
+  const travada = () => new Promise(() => {});
+  const r = await buscarIndicadores(travada, 50);
+  assert.deepEqual(r.erros, ['selic', 'cdi', 'ipca12m', 'dolar']);
+});

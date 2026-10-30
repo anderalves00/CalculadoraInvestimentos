@@ -10,7 +10,6 @@
 
 ## Agora
 - [ ] [2026-10-29, alta] Usar a Fase 1 e coletar ajustes do usuário
-- [ ] [2026-10-29, baixa] Timeout na busca do Banco Central (API travada não mostra aviso)
 - [ ] [2026-10-29, baixa] Atualização de 30 min não deve apagar edição em andamento nos indicadores
 - [ ] [2026-10-29, baixa] Tesouro Selic com Selic over (série 1178) em vez da meta
 

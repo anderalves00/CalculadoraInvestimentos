@@ -4,18 +4,25 @@ export const VALORES_PADRAO = { selic: .1375, cdi: .1365, ipca12m: .0458, dolar:
 
 const url = id => `https://api.bcb.gov.br/dados/serie/bcdata.sgs.${id}/dados/ultimos/1?formato=json`;
 
-async function buscarSerie(fetchFn, id) {
-  const r = await fetchFn(url(id));
+const LIMITE_MS = 10000;
+
+const comLimite = (promessa, ms) => Promise.race([
+  promessa,
+  new Promise((_, rejeitar) => setTimeout(() => rejeitar(new Error('tempo esgotado')), ms)),
+]);
+
+async function buscarSerie(fetchFn, id, ms) {
+  const r = await comLimite(fetchFn(url(id)), ms);
   if (!r.ok) throw new Error(`HTTP ${r.status}`);
-  const [ultimo] = await r.json();
+  const [ultimo] = await comLimite(r.json(), ms);
   const valor = Number(ultimo.valor);
   if (!Number.isFinite(valor)) throw new Error('valor inválido');
   return { valor, data: ultimo.data };
 }
 
-export async function buscarIndicadores(fetchFn = (...a) => fetch(...a)) {
+export async function buscarIndicadores(fetchFn = (...a) => fetch(...a), ms = LIMITE_MS) {
   const nomes = Object.keys(SERIES);
-  const res = await Promise.allSettled(nomes.map(n => buscarSerie(fetchFn, SERIES[n])));
+  const res = await Promise.allSettled(nomes.map(n => buscarSerie(fetchFn, SERIES[n], ms)));
   const saida = { erros: [] };
   res.forEach((r, i) => {
     const nome = nomes[i];
