@@ -26,12 +26,13 @@ export function criarColuna(dados, indice, { aoMudar, aoRemover, aoAjuda, podeRe
       <button class="botao-leve" data-acao="remover"${podeRemover ? '' : ' disabled'}>Remover</button>
     </div>
     <div class="linha-tipo">
-      <label>Tipo<select data-campo="tipo">${opcoes(TIPOS, dados.tipo)}</select></label>
+      <label>Tipo<select data-campo="tipo"><option value=""${dados.tipo ? '' : ' selected'}>Selecione o tipo</option>${opcoes(TIPOS, dados.tipo)}</select></label>
       <button class="icone-ajuda" data-acao="ajuda" aria-label="O que é este investimento?">?</button>
     </div>
     <div class="campo">
       <span class="rotulo-campo" id="rent-${indice}">Rentabilidade</span>
       <div class="segmentos" role="radiogroup" aria-labelledby="rent-${indice}" data-indexadores></div>
+      <span class="msg-erro" data-erro="indexador"></span>
     </div>
     <div class="dupla">
       <div class="campo">
@@ -55,16 +56,17 @@ export function criarColuna(dados, indice, { aoMudar, aoRemover, aoAjuda, podeRe
   let indexadorAnterior = dados.indexador;
 
   const preencherIndexadores = () => {
-    const validos = indexadoresDoTipo(dados.tipo);
-    if (!validos.includes(dados.indexador)) dados.indexador = validos[0];
+    const validos = dados.tipo ? indexadoresDoTipo(dados.tipo) : [];
+    if (!validos.includes(dados.indexador)) dados.indexador = validos.length === 1 ? validos[0] : '';
     // Taxa de outro indexador não tem o mesmo significado (95% do CDI ≠ 95% a.a.): pede de novo.
-    if (dados.indexador !== indexadorAnterior) { dados.taxa = ''; inputTaxa.value = ''; }
+    if (indexadorAnterior && dados.indexador !== indexadorAnterior) { dados.taxa = ''; inputTaxa.value = ''; }
     indexadorAnterior = dados.indexador;
-    grupo.innerHTML = validos.map(v => {
+    if (!validos.length) grupo.innerHTML = '<span class="dica">Escolha o tipo primeiro.</span>';
+    else grupo.innerHTML = validos.map(v => {
       const ativo = v === dados.indexador;
       return `<button type="button" role="radio" aria-checked="${ativo}" class="segmento${ativo ? ' ativo' : ''}" data-indexador="${v}"${validos.length === 1 ? ' disabled' : ''}>${ROTULO_BOTAO[v]}</button>`;
     }).join('');
-    rotuloTaxa.textContent = ROTULO_TAXA[dados.indexador];
+    rotuloTaxa.textContent = ROTULO_TAXA[dados.indexador] ?? 'Taxa';
   };
   preencherIndexadores();
 
@@ -104,6 +106,7 @@ export function criarColuna(dados, indice, { aoMudar, aoRemover, aoAjuda, podeRe
 }
 
 export function mostrarErros(el, erros) {
+  el.querySelector('[data-erro="indexador"]').textContent = erros.indexador ?? '';
   for (const campo of ['taxa', 'meses', 'valor']) {
     el.querySelector(`[data-campo="${campo}"]`).classList.toggle('invalido', Boolean(erros[campo]));
     el.querySelector(`[data-erro="${campo}"]`).textContent = erros[campo] ?? '';

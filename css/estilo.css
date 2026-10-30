@@ -103,6 +103,7 @@ input.invalido { border-color: var(--erro); background: var(--erro-fundo); }
 }
 .segmento.ativo { background: var(--destaque); border-color: var(--destaque); color: #fff; font-weight: 600; }
 .segmento:disabled { cursor: default; }
+.dica { font-size: .85rem; color: var(--texto-suave); align-self: center; }
 .segmento:disabled:not(.ativo) { opacity: .5; }
 .msg-erro { color: var(--erro); font-size: .8rem; min-height: 0; }
 .msg-erro:empty { display: none; }

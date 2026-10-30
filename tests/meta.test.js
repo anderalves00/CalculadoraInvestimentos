@@ -39,3 +39,20 @@ test('valor e prazo únicos sobrescrevem as colunas', () => {
   assert.deepEqual(r.map(c => [c.meses, c.valor]), [['12', '1'], ['12', '2']]);
   assert.equal(cols[0].meses, '6');
 });
+
+import { validarColuna } from '../js/estado.js';
+
+test('card em branco não mostra erro nem gera oferta', () => {
+  const v = validarColuna({ tipo: '', indexador: '', taxa: '', meses: '', valor: '' });
+  assert.equal(v.oferta, null);
+  assert.deepEqual(v.erros, {});
+});
+test('card com tipo escolhido pede o que falta', () => {
+  const v = validarColuna({ tipo: 'CDB', indexador: '', taxa: '', meses: '', valor: '' });
+  assert.equal(v.oferta, null);
+  assert.deepEqual(Object.keys(v.erros).sort(), ['indexador', 'meses', 'taxa', 'valor']);
+});
+test('card completo gera oferta em decimal', () => {
+  const v = validarColuna({ tipo: 'CDB', indexador: 'pre', taxa: '12,00%', meses: '12', valor: 'R$ 10.000,00' });
+  assert.deepEqual(v.oferta, { tipo: 'CDB', indexador: 'pre', taxa: .12, meses: 12, valor: 10000 });
+});

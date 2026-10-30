@@ -4,7 +4,7 @@ import { EDUCATIVO } from './conteudo.js';
 import { parseNumeroBR } from './ui/formato.js';
 import { renderIndicadores } from './ui/indicadores.js';
 import { criarColuna, mostrarErros, travarCampo } from './ui/colunas.js';
-import { aplicarUnico } from './estado.js';
+import { aplicarUnico, validarColuna, COLUNA_VAZIA } from './estado.js';
 import { renderSimulacao } from './ui/simulacao.js';
 import { renderCard, renderRecomendacao } from './ui/resultados.js';
 import { renderGraficos, corSerie } from './ui/graficos.js';
@@ -20,12 +20,8 @@ const ATUALIZAR_MS = 30 * 60 * 1000;
 const estado = {
   indicadores: { erros: [] },
   sobrescritos: { selic: null, cdi: null, ipca12m: null },
-  colunas: [
-    { tipo: 'CDB', indexador: 'pre', taxa: '12', meses: '12', valor: '10.000' },
-    { tipo: 'LCI', indexador: 'pctCDI', taxa: '95', meses: '12', valor: '10.000' },
-    { tipo: 'Tesouro Selic', indexador: 'selicMais', taxa: '0,05', meses: '12', valor: '10.000' },
-  ],
-  unico: { meses: { ativo: false, texto: '12' }, valor: { ativo: false, texto: 'R$ 10.000,00' } },
+  colunas: [COLUNA_VAZIA(), COLUNA_VAZIA(), COLUNA_VAZIA()],
+  unico: { meses: { ativo: false, texto: '' }, valor: { ativo: false, texto: '' } },
   simulacao: false,
 };
 
@@ -45,19 +41,6 @@ export function mercado() {
   return { cdi: v.cdi, selic: v.selic, ipca: v.ipca12m };
 }
 
-function validar(c) {
-  const erros = {};
-  const taxa = parseNumeroBR(c.taxa);
-  const meses = parseNumeroBR(c.meses);
-  const valor = parseNumeroBR(c.valor);
-  if (String(c.taxa).trim() === '') erros.taxa = 'Informe a taxa.';
-  else if (taxa == null || taxa < 0) erros.taxa = 'Informe uma taxa válida (ex.: 10,5).';
-  if (meses == null || !Number.isInteger(meses) || meses < 1 || meses > 600) erros.meses = 'Informe um prazo inteiro entre 1 e 600 meses.';
-  if (valor == null || valor <= 0) erros.valor = 'Informe um valor maior que zero.';
-  if (Object.keys(erros).length) return { oferta: null, erros };
-  return { oferta: { tipo: c.tipo, indexador: c.indexador, taxa: taxa / 100, meses, valor }, erros };
-}
-
 const ganchos = [];
 export const aoRecalcular = fn => ganchos.push(fn);
 
@@ -66,7 +49,7 @@ export function recalcular() {
   hoje.setHours(0, 0, 0, 0);
   const m = mercado();
   if (estado.simulacao) { recalcularSimulacao(m, hoje); return; }
-  const validacoes = aplicarUnico(estado.colunas, estado.unico).map(validar);
+  const validacoes = aplicarUnico(estado.colunas, estado.unico).map(validarColuna);
   validacoes.forEach((v, i) => mostrarErros(elementos[i], v.erros));
   const ofertas = validacoes.map(v => v.oferta);
   const resultados = ofertas.map(o => (o ? simular(o, m, hoje) : null));
@@ -194,15 +177,16 @@ async function atualizarIndicadores() {
 }
 
 btnAdicionar.addEventListener('click', () => {
-  const primeira = estado.colunas[0];
-  estado.colunas.push({ tipo: 'CDB', indexador: 'pctCDI', taxa: '100', meses: primeira.meses, valor: primeira.valor });
+  estado.colunas.push(COLUNA_VAZIA());
   renderColunas();
 });
 
 aoRecalcular(({ ofertas, resultados, mercado: m, ipca12m, hoje, elementos: els }) => {
   const iv = vencedor(resultados);
   resultados.forEach((r, i) => renderCard(els[i], r, { venceu: i === iv, cor: corSerie(i) }));
-  renderRecomendacao(document.getElementById('recomendacao'), recomendar(ofertas, resultados, m, ipca12m));
+  const elRec = document.getElementById('recomendacao');
+  if (resultados.some(Boolean)) renderRecomendacao(elRec, recomendar(ofertas, resultados, m, ipca12m));
+  else elRec.innerHTML = '';
 
   const series = ofertas
     .map((o, i) => o && { nome: `${i + 1}. ${o.tipo}`, cor: corSerie(i), r: resultados[i], evolucao: evolucaoMensal(o, m, hoje) })

@@ -29,6 +29,8 @@
 
 **Publicação:** GitHub Pages exige plano pago para repo privado (API respondeu 422). Usuário escolheu repo público em vez de Cloudflare com senha (Fase 2); a página não guarda dados pessoais.
 
+**Cards em branco (pedido do usuário):** os exemplos iniciais pareciam testes gravados; a página abre sem tipo, rentabilidade ou valores, e só avisa erro depois de escolher o tipo.
+
 **Ficou aberto:** nada da Fase 1.
 
 ## AAAA-MM-DD
