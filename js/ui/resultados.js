@@ -16,7 +16,8 @@ export function renderCard(el, r, { venceu, cor }) {
       <span>Você recebe</span>
       <strong>${brl(r.liquido)}</strong>
     </div>
-    <div class="res-taxa"><strong>${pct(r.rentLiqAno)}</strong> líquidos ao ano${r.equivalenciaCDI != null ? ` · equivale a ${pct(r.equivalenciaCDI, 0)} do CDI` : ''}</div>
+    <div class="res-ganho">Ganho líquido <strong>${brl(r.ganhoLiquido)}</strong> · média <strong>${brl(r.ganhoMedioMes)}/mês</strong></div>
+    <div class="res-taxa"><strong>${pct(r.rentLiqMes)} ao mês</strong> · <strong>${pct(r.rentLiqAno)} ${r.diasCorridos < 365 ? 'equivalente ao ano' : 'ao ano'}</strong> líquidos${r.equivalenciaCDI != null ? ` · equivale a ${pct(r.equivalenciaCDI, 0)} do CDI` : ''}</div>
     ${linha('Valor investido', brl(r.valor))}
     ${linha('Valor bruto', brl(r.bruto))}
     ${r.iof > 0 ? linha('IOF', '− ' + brl(r.iof)) : ''}

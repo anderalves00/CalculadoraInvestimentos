@@ -54,3 +54,9 @@ test('equivalência considera IOF: CDB 100% CDI em 1 mês equivale a 100%', () =
   assert.ok(r.iof > 0);
   perto(r.equivalenciaCDI, 1, 1e-6);
 });
+test('rentabilidade líquida ao mês e ganho médio mensal', () => {
+  const r = simular({ tipo: 'LCI', indexador: 'pctCDI', taxa: 1, meses: 12, valor: 1000 }, mercado, hoje);
+  perto(r.rentLiqMes, (r.liquido / 1000) ** (1 / 12) - 1);
+  perto(r.ganhoLiquido, r.liquido - 1000);
+  perto(r.ganhoMedioMes, (r.liquido - 1000) / 12);
+});

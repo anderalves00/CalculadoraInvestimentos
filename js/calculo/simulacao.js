@@ -30,7 +30,7 @@ export function simular(oferta, mercado, hoje) {
 }
 
 export function simularComDias(oferta, mercado, vencimento, dc, du) {
-  const { tipo, valor } = oferta;
+  const { tipo, valor, meses } = oferta;
 
   const bruto = valor * fatorDiario(oferta, mercado) ** du;
   const rendimento = bruto - valor;
@@ -43,6 +43,9 @@ export function simularComDias(oferta, mercado, vencimento, dc, du) {
 
   const rentLiqPeriodo = liquido / valor - 1;
   const rentLiqAno = du > 0 ? (liquido / valor) ** (252 / du) - 1 : 0;
+  const rentLiqMes = (liquido / valor) ** (1 / meses) - 1;
+  const ganhoLiquido = liquido - valor;
+  const ganhoMedioMes = ganhoLiquido / meses;
 
   // Ganho bruto que um CDB precisaria ter para, após IOF e IR do mesmo prazo, entregar o mesmo líquido.
   const brutoNecessario = valor + (liquido - valor) / ((1 - aliquotaIOF(dc)) * (1 - aliquotaIR(dc)));
@@ -53,6 +56,6 @@ export function simularComDias(oferta, mercado, vencimento, dc, du) {
   return {
     valor, bruto, rendimento, iof, ir, custodia: cust, liquido,
     aliquotaIR: aliq, isento, diasCorridos: dc, diasUteis: du, vencimento,
-    rentLiqPeriodo, rentLiqAno, equivalenciaCDI,
+    rentLiqPeriodo, rentLiqAno, rentLiqMes, ganhoLiquido, ganhoMedioMes, equivalenciaCDI,
   };
 }

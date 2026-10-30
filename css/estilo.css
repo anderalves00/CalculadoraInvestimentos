@@ -127,7 +127,9 @@ input.invalido { border-color: var(--erro); background: var(--erro-fundo); }
 .res-liquido span { color: var(--texto-suave); font-size: .85rem; }
 .res-liquido strong { font-size: 1.5rem; font-variant-numeric: tabular-nums; }
 .marca-serie { width: 10px; height: 10px; border-radius: 50%; background: var(--cor-serie); align-self: center; }
-.res-taxa { font-size: .9rem; }
+.res-taxa, .res-ganho { font-size: .9rem; }
+.res-ganho { color: var(--texto-suave); }
+.res-ganho strong { color: var(--texto); }
 .res-taxa strong { color: var(--destaque); font-size: 1.05rem; }
 .res-linha { display: flex; justify-content: space-between; gap: 8px; font-size: .85rem; color: var(--texto-suave); font-variant-numeric: tabular-nums; }
 .res-linha span:last-child { color: var(--texto); }
