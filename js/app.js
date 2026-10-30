@@ -17,7 +17,7 @@ const ATUALIZAR_MS = 30 * 60 * 1000;
 
 const estado = {
   indicadores: { erros: [] },
-  sobrescritos: { cdi: null, ipca12m: null },
+  sobrescritos: { selic: null, cdi: null, ipca12m: null },
   colunas: [
     { tipo: 'CDB', indexador: 'pre', taxa: '12', meses: '12', valor: '10.000' },
     { tipo: 'LCI', indexador: 'pctCDI', taxa: '95', meses: '12', valor: '10.000' },

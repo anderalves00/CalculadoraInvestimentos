@@ -25,7 +25,7 @@ export function renderIndicadores(el, { indicadores, sobrescritos, valores, padr
     : '';
 
   el.innerHTML = `<div class="indicadores">
-    ${blocoFixo('selic', indicadores.selic, numero(valores.selic * 100) + '%')}
+    ${blocoEditavel('selic', indicadores.selic, valores.selic, sobrescritos.selic != null)}
     ${blocoEditavel('cdi', indicadores.cdi, valores.cdi, sobrescritos.cdi != null)}
     ${blocoEditavel('ipca12m', indicadores.ipca12m, valores.ipca12m, sobrescritos.ipca12m != null)}
     ${blocoFixo('dolar', indicadores.dolar, 'R$ ' + numero(valores.dolar, 4))}

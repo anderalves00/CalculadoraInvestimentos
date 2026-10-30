@@ -25,10 +25,12 @@ function custodia(tipo, valor, bruto, dc) {
 }
 
 export function simular(oferta, mercado, hoje) {
-  const { tipo, meses, valor } = oferta;
-  const vencimento = somarMeses(hoje, meses);
-  const dc = diasCorridos(hoje, vencimento);
-  const du = diasUteis(hoje, vencimento);
+  const vencimento = somarMeses(hoje, oferta.meses);
+  return simularComDias(oferta, mercado, vencimento, diasCorridos(hoje, vencimento), diasUteis(hoje, vencimento));
+}
+
+export function simularComDias(oferta, mercado, vencimento, dc, du) {
+  const { tipo, valor } = oferta;
 
   const bruto = valor * fatorDiario(oferta, mercado) ** du;
   const rendimento = bruto - valor;
@@ -42,11 +44,11 @@ export function simular(oferta, mercado, hoje) {
   const rentLiqPeriodo = liquido / valor - 1;
   const rentLiqAno = du > 0 ? (liquido / valor) ** (252 / du) - 1 : 0;
 
-  const aliqCDB = aliquotaIR(dc);
-  const brutoNecessario = valor + (liquido - valor) / (1 - aliqCDB);
-  const equivalenciaCDI = du > 0
+  // Ganho bruto que um CDB precisaria ter para, após IOF e IR do mesmo prazo, entregar o mesmo líquido.
+  const brutoNecessario = valor + (liquido - valor) / ((1 - aliquotaIOF(dc)) * (1 - aliquotaIR(dc)));
+  const equivalenciaCDI = du > 0 && mercado.cdi > 0
     ? ((brutoNecessario / valor) ** (1 / du) - 1) / (diario(mercado.cdi) - 1)
-    : 0;
+    : null;
 
   return {
     valor, bruto, rendimento, iof, ir, custodia: cust, liquido,

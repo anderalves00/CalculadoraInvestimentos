@@ -36,9 +36,15 @@ export function criarColuna(dados, indice, { aoMudar, aoRemover, aoAjuda, podeRe
   const selIndexador = el.querySelector('[data-campo="indexador"]');
   const rotuloTaxa = el.querySelector('[data-rotulo-taxa]');
 
+  const inputTaxa = el.querySelector('[data-campo="taxa"]');
+  let indexadorAnterior = dados.indexador;
+
   const preencherIndexadores = () => {
     const validos = indexadoresDoTipo(dados.tipo);
     if (!validos.includes(dados.indexador)) dados.indexador = validos[0];
+    // Taxa de outro indexador não tem o mesmo significado (95% do CDI ≠ 95% a.a.): pede de novo.
+    if (dados.indexador !== indexadorAnterior) { dados.taxa = ''; inputTaxa.value = ''; }
+    indexadorAnterior = dados.indexador;
     selIndexador.innerHTML = opcoes(validos, dados.indexador, v => ROTULO_INDEXADOR[v]);
     selIndexador.disabled = validos.length === 1;
     rotuloTaxa.textContent = ROTULO_TAXA[dados.indexador];

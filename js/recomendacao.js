@@ -12,7 +12,7 @@ export function recomendar(ofertas, resultados, mercado, ipca12m) {
   if (iv >= 0) {
     const { tipo, indexador } = ofertas[iv];
     const r = resultados[iv];
-    p.push(`Pelas taxas de hoje, **${tipo} (${ROTULO_INDEXADOR[indexador]})** tende a ser a melhor opção: ${pct(r.rentLiqAno)} líquidos ao ano, equivalente a ${pct0(r.equivalenciaCDI)} do CDI.`);
+    p.push(`Pelas taxas de hoje, **${tipo} (${ROTULO_INDEXADOR[indexador]})** tende a ser a melhor opção: ${pct(r.rentLiqAno)} líquidos ao ano${r.equivalenciaCDI != null ? `, equivalente a ${pct0(r.equivalenciaCDI)} do CDI` : ''}.`);
   }
 
   if (validos.length > 1 && prazosDiferentes(validos.map(v => v.o))) {

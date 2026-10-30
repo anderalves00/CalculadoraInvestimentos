@@ -45,3 +45,12 @@ test('Tesouro Selic até 10 mil sem custódia; acima só no excedente', () => {
 test('CDB sem custódia', () => {
   assert.equal(simular({ tipo: 'CDB', indexador: 'pre', taxa: .1, meses: 12, valor: 50000 }, mercado, hoje).custodia, 0);
 });
+test('CDI zero não gera NaN na equivalência', () => {
+  const r = simular({ tipo: 'CDB', indexador: 'pre', taxa: .1, meses: 12, valor: 1000 }, { cdi: 0, selic: .1, ipca: .045 }, hoje);
+  assert.equal(r.equivalenciaCDI, null);
+});
+test('equivalência considera IOF: CDB 100% CDI em 1 mês equivale a 100%', () => {
+  const r = simular({ tipo: 'CDB', indexador: 'pctCDI', taxa: 1, meses: 1, valor: 1000 }, mercado, new Date(2026, 1, 1));
+  assert.ok(r.iof > 0);
+  perto(r.equivalenciaCDI, 1, 1e-6);
+});
